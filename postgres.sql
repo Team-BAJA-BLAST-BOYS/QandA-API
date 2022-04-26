@@ -39,3 +39,9 @@ CREATE TABLE photos (
 );
 
 \copy photos FROM '~/Desktop/work/sdc_files/answers_photos.csv' DELIMITER ',' CSV HEADER;
+
+
+--Create Index--
+CREATE INDEX index_product_id ON questions(product_id);
+CREATE INDEX fk_answer_question_id ON answers(question_id);
+CREATE INDEX fk_photos_answer_id ON photos(answer_id);
