@@ -26,7 +26,10 @@ CREATE TABLE answers (
   answerer_name TEXT NOT NULL,
   answerer_email TEXT,
   reported INT DEFAULT 0,
-  helpful INT DEFAULT 0
+  helpful INT DEFAULT 0,
+  CONSTRAINT fk_answer_question_id2
+    FOREIGN KEY(question_id)
+      REFERENCES questions(id)
 );
 
 \copy answers FROM '~/Desktop/work/sdc_files/answers.csv' DELIMITER ',' CSV HEADER;
