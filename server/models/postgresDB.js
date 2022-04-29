@@ -61,7 +61,6 @@ module.exports = {
       }
   },
   getQuestions: async (product_id) => {
-    // console.log('product_id: ', product_id);
     const { rows } = await pool.query(`
       SELECT
         q.id AS question_id,
@@ -92,14 +91,20 @@ module.exports = {
         results: rows
       }
   },
-  addQuestion: async (data) => {
-    console.log('data: ', data);
+  addQuestion: async(data) => {
+    // console.log('data: ', data);
     const insertQuestion = `
       INSERT INTO
         questions (product_id, body, asker_name, asker_email, date_written)
-      VALUES (${data.product_id}, ${data.body}, ${data.name}, ${data.email}, ${Date.now()})
+      VALUES (${data.product_id}, '${data.body}', '${data.name}', '${data.email}', ${Date.now()})
       RETURNING id
       `;
+    console.log('insertQuestion: ', insertQuestion);
+    await pool.query(insertQuestion);
+  },
+  putHelpful: async(question_id) => {
+    const update = "UPDATE questions SET helpful=helpful+1 WHERE id=" + question_id;
+    await pool.query(update);
   },
   getAnswers: async(question_id, page, counter) => {
     console.log('question_id: ', question_id);

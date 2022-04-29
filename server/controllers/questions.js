@@ -16,11 +16,20 @@ module.exports = {
         name: req.body.name,
         email: req.body.email,
         product_id: req.body.product_id
-      })
+      });
+      res.send('inserted');
     } catch (err) {
       console.error(err);
     }
   },
-  putHelpful: () => {},
+  putHelpful: async(req, res) => {
+    try {
+      await psql.putHelpful(req.params.question_id);
+      res.send('updated as helpful!');
+    } catch(err) {
+      console.error(err);
+    }
+
+  },
   putReport: () => {}
 }
